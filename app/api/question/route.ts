@@ -1,19 +1,8 @@
+import {EntriesSchema} from '@/types'
 import {qa} from '@/utils/ai'
 import {getUserByCleckID} from '@/utils/auth'
 import {prisma} from '@/utils/db'
 import {NextResponse} from 'next/server'
-import {z} from 'zod'
-
-export const QuestionSchema = z.object({
-  journalId: z.string(),
-  content: z.string(),
-  createdAt: z.date(),
-  updatedAt: z.date(),
-})
-
-export const EntriesSchema = z.array(QuestionSchema)
-
-export type EntriesSchemaType = z.infer<typeof EntriesSchema>
 
 export const POST = async (request: Request) => {
   const {question} = await request.json()
