@@ -1,0 +1,58 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model User {
+  userId    String   @id @default(uuid())
+  cratedAt  DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  email String @unique
+  name String?
+  clerkId  String         @unique
+  journals JournalEntry[]
+  analysis Analysis[]
+}
+
+model JournalEntry {
+  journalId String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  creatorUser   User      @relation(fields: [creatorUserId], references: [userId])
+  creatorUserId String
+
+  content String @db.Text
+  analisis  Analysis?
+
+  @@index([creatorUserId, journalId])
+}
+
+model Analysis {
+  analysisId String   @id @default(uuid())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  journalAnalysis   JournalEntry @relation(fields: [journalAnalysisId], references: [journalId], onDelete: Cascade)
+  journalAnalysisId String       @unique
+
+  creatorUser User @relation(fields: [creatorUserId], references: [userId])
+  creatorUserId String
+
+  mood     String
+  summary  String  @db.Text
+  color    String
+  subject String
+  negative Boolean
+  sentimentScore Float @default(0)
+
+  @@index([creatorUserId])
+}
