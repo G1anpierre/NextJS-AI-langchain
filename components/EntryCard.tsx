@@ -1,4 +1,4 @@
-import {JournalUserSchemaType} from '@/app/(dashboard)/journal/page'
+import {JournalUserSchemaType} from '@/types'
 import React from 'react'
 
 export const EntryCard = (journal: JournalUserSchemaType) => {

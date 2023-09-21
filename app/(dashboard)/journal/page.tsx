@@ -1,20 +1,10 @@
 import {CreateJournalCard} from '@/components/CreateJournalCard'
 import {EntryCard} from '@/components/EntryCard'
 import Search from '@/components/Search'
+import {JournalsUserSchema} from '@/types'
 import {prisma} from '@/utils/db'
 import {auth} from '@clerk/nextjs'
 import Link from 'next/link'
-import {z} from 'zod'
-
-export const JournalUserSchema = z.object({
-  journalId: z.string(),
-  content: z.string(),
-  createdAt: z.date(),
-})
-
-export const JournalsUserSchema = z.array(JournalUserSchema).optional()
-
-export type JournalUserSchemaType = z.infer<typeof JournalUserSchema>
 
 const getJournals = async () => {
   const {userId} = await auth()
