@@ -9,7 +9,7 @@ import {OutputFixingParser} from 'langchain/output_parsers'
 import {Document} from 'langchain/document'
 
 import {z} from 'zod'
-import {EntriesSchemaType} from '@/app/api/question/route'
+import {EntriesSchemaType} from '@/types'
 
 const parser = StructuredOutputParser.fromZodSchema(
   z.object({
