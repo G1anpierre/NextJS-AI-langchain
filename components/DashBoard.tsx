@@ -29,9 +29,9 @@ export const DashBoard = ({children}: {children: React.ReactNode}) => {
       </div>
       <div className="col-start-1 col-end-3 border-b-4">
         <div className="flex items-center justify-between h-20 bg-gray-500 px-4">
-          <div className="flex items-center justify-center h-10 w-10 bg-gray-200 rounded-full">
-            <span>Dash</span>
-          </div>
+          <Link href="/">
+            <img className="h-20" src="/logo-animo.png" alt="logo animo" />
+          </Link>
           <div className="">
             <UserButton afterSignOutUrl="/" />
           </div>
