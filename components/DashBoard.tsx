@@ -3,6 +3,7 @@ import Link from 'next/link'
 
 export const DashBoard = ({children}: {children: React.ReactNode}) => {
   const links = [
+    {href: '/', name: 'Home'},
     {href: '/journal', name: 'Journals'},
     {href: '/history', name: 'History'},
   ]
@@ -14,12 +15,13 @@ export const DashBoard = ({children}: {children: React.ReactNode}) => {
           <div>
             <ul className="grid grid-flow-row auto-rows-[50px] gap-1">
               {links.map(link => (
-                <li
+                <Link
+                  href={link.href}
                   key={link.name}
                   className="bg-gray-200 hover:bg-gray-400 cursor-pointer flex justify-center items-center"
                 >
-                  <Link href={link.href}>{link.name}</Link>
-                </li>
+                  <li>{link.name}</li>
+                </Link>
               ))}
             </ul>
           </div>

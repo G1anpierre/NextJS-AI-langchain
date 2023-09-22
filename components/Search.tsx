@@ -9,14 +9,13 @@ const Search = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const answerResponse = await askQuestion(search)
-    console.log(answerResponse)
     setResponse(answerResponse)
   }
 
   return (
     <>
       <div className="grid mb-8 grid-cols-4 gap-3">
-        <div className="col-start-1 col-span-2">
+        <div className="col-start-2 col-span-2">
           <form onSubmit={handleSubmit}>
             <div className="gap-2 grid grid-flow-col">
               <input
@@ -25,17 +24,20 @@ const Search = () => {
                 value={search}
                 name="search"
                 onChange={e => setSearch(e.target.value)}
+                placeholder="Ask a question related to your mood"
               ></input>
               <button
                 type="submit"
                 className="block rounded bg-indigo-500 px-3.5 text-sm font-semibold text-white"
               >
-                Search
+                Ask
               </button>
             </div>
           </form>
         </div>
-        <div className="col-start-3 col-span-2">{response}</div>
+        <div className="col-start-2 col-span-2 row-start-2 text- text-indigo-500">
+          {response}
+        </div>
       </div>
     </>
   )
