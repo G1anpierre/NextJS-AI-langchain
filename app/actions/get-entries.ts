@@ -19,11 +19,16 @@ export const getEntry = async (journalId: string) => {
         const journalEntryData = JournalEntrySchema.safeParse(journalEntry);
 
         if(journalEntryData.success){ 
-            return journalEntryData.data;
+            return {
+                data: journalEntryData.data,
+                success: true,
+            };
         }
-         return null;
+         return { error: 'Failed on validate journal Entry', success: false };
     } catch (e) {
-        console.error(`Error at getting journal - ${e}`);
-        return null;
+        if (e instanceof Error) {
+            console.error(`Error at creating journal entry: ${e.message}`);
+          }
+          return { error: 'Failed to get journal entry', success: false };
+        };
     }
-};

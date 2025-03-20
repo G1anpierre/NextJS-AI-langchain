@@ -42,9 +42,12 @@ export const createJournalEntry = async () => {
       data: createdJournal,
       analysis: analysis,
     });
-  } catch (e) {
-    console.error(`Error at creating - ${e}`);
-    return NextResponse.error();
+  } catch (e: unknown) {
+
+    if (e instanceof Error) {
+      console.error(`Error at creating journal entry: ${e.message}`);
+    }
+    return NextResponse.json({ error: 'Failed to create journal entry' }, { status: 500 });
   }
 
 }

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { auth } from "@clerk/nextjs/server";
 
 export const Hero = async () => {
+  // TODO - Add user authentication flow with Clerk.
   // const { userId }: { userId: string | null } = await auth();
 
   const href = "/new-user";

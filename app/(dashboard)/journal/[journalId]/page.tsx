@@ -10,11 +10,11 @@ const JournalDetails = async ({
   const resultParams = await params;
   const journalEntry = await getEntry(resultParams.journalId);
 
-  if (!journalEntry) {
+  if (!journalEntry.success || !journalEntry.data) {
     return <div>Journal not found</div>;
   }
 
-  return <Editor journnalEntry={journalEntry} />;
+  return <Editor journnalEntry={journalEntry.data} />;
 };
 
 export default JournalDetails;
