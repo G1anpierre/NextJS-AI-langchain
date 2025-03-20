@@ -1,11 +1,15 @@
+"use server";
+
+
 import { analyze } from "@/utils/ai";
 import { getUserByCleckID } from "@/utils/auth";
 import { prisma } from "@/utils/db";
+import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 
-export const POST = async () => {
-  const user = await getUserByCleckID();
-  console.log({user});
+
+export const createJournalEntry = async () => {
+    const user = await getUserByCleckID();
   if (!user) 
     return NextResponse.error();
   try {
@@ -32,12 +36,18 @@ export const POST = async () => {
       },
     });
 
+    revalidatePath("/journal");
+
     return NextResponse.json({
       data: createdJournal,
       analysis: analysis,
     });
-  } catch (e) {
-    console.error(`Error at creating - ${e}`);
-    return NextResponse.error();
+  } catch (e: unknown) {
+
+    if (e instanceof Error) {
+      console.error(`Error at creating journal entry: ${e.message}`);
+    }
+    return NextResponse.json({ error: 'Failed to create journal entry' }, { status: 500 });
   }
-};
+
+}

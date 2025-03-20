@@ -1,10 +1,10 @@
-import {UserButton} from '@clerk/nextjs'
-import {auth} from '@clerk/nextjs'
-import Image from 'next/image'
-import Link from 'next/link'
+import { UserButton } from "@clerk/nextjs";
+import { auth } from "@clerk/nextjs/server";
+import Image from "next/image";
+import Link from "next/link";
 
 export const Header = async () => {
-  const {userId}: {userId: string | null} = await auth()
+  const { userId }: { userId: string | null } = await auth();
 
   return (
     <header className="absolute inset-x-0 top-0 z-50">
@@ -28,5 +28,5 @@ export const Header = async () => {
         ) : null}
       </nav>
     </header>
-  )
-}
+  );
+};
