@@ -5,9 +5,10 @@ import React from "react";
 const JournalDetails = async ({
   params,
 }: {
-  params: { journalId: string };
+  params: Promise<{ journalId: string }>;
 }) => {
-  const journalEntry = await getEntry(params.journalId);
+  const resultParams = await params;
+  const journalEntry = await getEntry(resultParams.journalId);
 
   if (!journalEntry) {
     return <div>Journal not found</div>;
