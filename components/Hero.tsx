@@ -3,9 +3,9 @@ import Link from "next/link";
 import { auth } from "@clerk/nextjs/server";
 
 export const Hero = async () => {
-  const { userId }: { userId: string | null } = await auth();
+  // const { userId }: { userId: string | null } = await auth();
 
-  const href = userId ? "/journal" : "/new-user";
+  const href = "/new-user";
   return (
     <div className="relative isolate overflow-hidden pt-14 px-4">
       <Image

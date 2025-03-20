@@ -3,13 +3,15 @@ const createURL = (path: string) => {
 }
 
 export const createNewEntry = async () => {
-  const response = await fetch(
+  const response =  await fetch(
     new Request(createURL('/api/journal'), {
       method: 'POST',
     }),
   )
+
   const data = await response.json()
   return data
+
 }
 
 export const updateJournalEntry = async (

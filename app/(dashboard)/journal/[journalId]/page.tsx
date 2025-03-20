@@ -1,45 +1,19 @@
-import {Editor} from '@/components/Editor'
-import {getUserByCleckID} from '@/utils/auth'
-import {prisma} from '@/utils/db'
-import React from 'react'
-import {z} from 'zod'
+import { getEntry } from "@/app/actions/get-entries";
+import { Editor } from "@/components/Editor";
+import React from "react";
 
-export const JournalEntryAnalisisSchema = z.object({
-  mood: z.string(),
-  summary: z.string(),
-  color: z.string(),
-  subject: z.string(),
-  negative: z.boolean(),
-  sentimentScore: z.number(),
-})
+const JournalDetails = async ({
+  params,
+}: {
+  params: { journalId: string };
+}) => {
+  const journalEntry = await getEntry(params.journalId);
 
-const JournalEntrySchema = z.object({
-  journalId: z.string(),
-  content: z.string(),
-  analisis: JournalEntryAnalisisSchema,
-})
+  if (!journalEntry) {
+    return <div>Journal not found</div>;
+  }
 
-export type JournalEntryType = z.infer<typeof JournalEntrySchema>
+  return <Editor journnalEntry={journalEntry} />;
+};
 
-const getEntry = async (journalId: string) => {
-  const user = await getUserByCleckID()
-  const journalEntry = await prisma.journalEntry.findUnique({
-    where: {
-      creatorUserId: user?.userId,
-      journalId,
-    },
-    include: {
-      analisis: true,
-    },
-  })
-  const validateJournalEntry = JournalEntrySchema.parse(journalEntry)
-  return validateJournalEntry
-}
-
-const JournalDetails = async ({params}: {params: {journalId: string}}) => {
-  const journalEntry = await getEntry(params.journalId)
-
-  return <Editor journnalEntry={journalEntry} />
-}
-
-export default JournalDetails
+export default JournalDetails;
