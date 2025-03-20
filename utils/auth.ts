@@ -1,4 +1,4 @@
-import {auth} from '@clerk/nextjs'
+import {auth} from '@clerk/nextjs/server'
 import {prisma} from './db'
 
 export const getUserByCleckID = async () => {

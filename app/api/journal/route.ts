@@ -1,21 +1,22 @@
-import {analyze} from '@/utils/ai'
-import {getUserByCleckID} from '@/utils/auth'
-import {prisma} from '@/utils/db'
-import {revalidatePath} from 'next/cache'
-import {NextResponse} from 'next/server'
+import { analyze } from "@/utils/ai";
+import { getUserByCleckID } from "@/utils/auth";
+import { prisma } from "@/utils/db";
+import { revalidatePath } from "next/cache";
+import { NextResponse } from "next/server";
 
 export const POST = async () => {
-  const user = await getUserByCleckID()
-  if (!user) return
+  const user = await getUserByCleckID();
+  if (!user) return;
   try {
     const createdJournal = await prisma.journalEntry.create({
       data: {
         creatorUserId: user.userId,
-        content: 'Write about your day!',
+        content: "Write about your day!",
       },
-    })
+    });
 
-    const analysis = await analyze(createdJournal.content)
+    // Analyze the journal entry with AI and save the analysis
+    const analysis = await analyze(createdJournal.content);
 
     await prisma.analysis.create({
       data: {
@@ -28,12 +29,12 @@ export const POST = async () => {
         negative: analysis.negative,
         sentimentScore: analysis.sentimentScore,
       },
-    })
+    });
 
-    revalidatePath('/journal')
+    revalidatePath("/journal");
 
-    return NextResponse.json({data: createdJournal})
+    return NextResponse.json({ data: createdJournal });
   } catch (e) {
-    console.error(`Error at creating - ${e}`)
+    console.error(`Error at creating - ${e}`);
   }
-}
+};
