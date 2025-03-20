@@ -101,6 +101,7 @@ export const qa = async (question: string, entries: EntriesSchemaType) => {
     openAIApiKey: process.env.OPENAI_API_KEY,
   });
 
+  // ? I have notice that the documents are not being embeded before being saved in the vector store
   // Save the documents in a vector store
   const embeddings = new OpenAIEmbeddings();
   const vectorstore = await MemoryVectorStore.fromDocuments(docs, embeddings);
