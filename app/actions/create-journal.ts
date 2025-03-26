@@ -45,7 +45,7 @@ export const createJournalEntry = async () => {
   } catch (e: unknown) {
 
     if (e instanceof Error) {
-      console.error(`Error at creating journal entry: ${e.message}`);
+      console.error(`Error at creating journal entry: ${e.message || e}`);
     }
     return NextResponse.json({ error: 'Failed to create journal entry' }, { status: 500 });
   }
